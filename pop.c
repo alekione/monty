@@ -4,13 +4,11 @@
  * pop - removes/deletes element at the top of the stack
  * @stack: stack of linked list
  */
-void pop(stack_t **stack)
+void pop(stack_t **stack, unsigned int __attribute__((unused))num)
 {
 	stack_t *ptr;
 
 	ptr = *stack;
-	if (ptr == NULL)
-		return;
 	*stack = ptr->next;
 	if (ptr->next != NULL)
 		ptr->next->prev = NULL;

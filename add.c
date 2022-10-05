@@ -1,13 +1,14 @@
 #include "monty.h"
 
-void add(stack_t **stack)
+/**
+ * add - add the first two elements of the stack
+ * @stack: stack with elements
+ * @num: unused number
+ */
+void add(stack_t **stack, unsigned int __attribute__((unused))num)
 {
 	stack_t *ptr = *stack;
 
-	if (ptr == NULL || ptr->next == NULL)
-	{
-		print_err(stack, "add", NULL);
-	}
 	ptr->next->n += ptr->n;
 	*stack = ptr->next;
 	ptr->next->prev = NULL;

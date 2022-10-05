@@ -5,15 +5,16 @@
  * @stack: pointer to the head of the list
  * @n: int data to add to the node
  */
-void push(stack_t **stack, const int n)
+void push(stack_t **stack, unsigned int n)
 {
 	stack_t *ptr, *start;
 
-	if (stack == NULL)
-		print_err(stack, "malloc", NULL);
 	ptr = malloc(sizeof(stack_t));
 	if (ptr == NULL)
-		print_err(stack, "malloc", NULL);
+	{
+		print_err("malloc", NULL);
+		return;
+	}
 	ptr->n = n;
 	ptr->next = NULL;
 	ptr->prev = NULL;

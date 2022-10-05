@@ -1,14 +1,15 @@
 #include "monty.h"
 
-void swap(stack_t **stack)
+/**
+ * swap - swaps the first two elements of the stack
+ * @stack: stack of elements
+ * @num: unused number
+ */
+void swap(stack_t **stack, unsigned int __attribute__((unused))num)
 {
 	stack_t *ptr = *stack;
 	int n;
 
-	if (ptr == NULL || ptr->next == NULL)
-	{
-		print_err(stack, "swap", NULL);
-	}
 	n = ptr->n;
 	ptr->n = ptr->next->n;
 	ptr->next->n = n;

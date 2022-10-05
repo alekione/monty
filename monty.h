@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <unistd.h>
+#include <stddef.h>
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -36,22 +37,35 @@ typedef struct instruction_s
 	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
+/**
+ * struct stack_info - contains important details about stack
+ * @line_num: file line number counter
+ * @val: holds int value required by stack
+ * @ptr: holds address to instruction_t pointer
+ */
 typedef struct stack_info
 {
 	int line_num;
 	char *val;
+	instruction_t **ptr;
 } stack_info;
 
 extern stack_info *info;
 
-void run_command(stack_t **stack, instruction_t **instruct);
-void strip_args(instruction_t *instruct, char *ptr);
-void push(stack_t **stack, const int num);
-void pop(stack_t **stack);
-void swap(stack_t **stack);
-void add(stack_t **stack);
-void pall(stack_t **stack);
-void pint(stack_t **stack);
-void print_err(stack_t **stack, char *iden, char *add_info);
+int process_file(stack_t **stack, instruction_t **instruct, char *file);
+ssize_t _getline(char **pline_buf, size_t *pn, FILE *fin);
+void initialize(instruction_t **instruct);
+int run_command(stack_t **stack, instruction_t **instruct);
+bool isexecutable(char *command, stack_t *stack);
+void stripstr(char **ptr);
+void push(stack_t **stack, unsigned int num);
+void pop(stack_t **stack, unsigned int num);
+void swap(stack_t **stack, unsigned int num);
+void add(stack_t **stack, unsigned int num);
+void pall(stack_t **stack, unsigned int num);
+void pint(stack_t **stack, unsigned int num);
+void print_err(char *iden, char *add_info);
+void free_all(stack_t **stack, instruction_t **instruct);
 void free_stack(stack_t **stack);
+void free_str(char **ptr);
 #endif
