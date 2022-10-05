@@ -79,7 +79,25 @@ int run_command2(char *op, int execute, stack_t **stack,
 		execute = 1;
 		inst->f = pint;
 	}
-	else
+	else if (!(isopcode(op)))
 		print_err("unknown", inst->opcode);
 	return (execute);
+}
+
+/**
+ * isopcode - checks whether a given string is an opcode
+ * @opcode: char opcode
+ * Return: true or false
+ */
+bool isopcode(char *opcode)
+{
+	char *cmd[] = {"push", "pall", "pint", "pop", "swap", "add", "nop", NULL};
+	int i;
+
+	for (i = 0; cmd[i] != NULL; i++)
+	{
+		if (strcmp(opcode, cmd[i]) == 0)
+			return (true);
+	}
+	return (false);
 }

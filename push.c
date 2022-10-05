@@ -13,7 +13,7 @@ void push(stack_t **stack, unsigned int n)
 	if (ptr == NULL)
 	{
 		print_err("malloc", NULL);
-		return;
+		exit(EXIT_FAILURE);
 	}
 	ptr->n = n;
 	ptr->next = NULL;

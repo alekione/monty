@@ -14,7 +14,7 @@ void print_err(char *iden, char *add_info)
 	if (strcmp(iden, inv) == 0)
 		fprintf(stderr, "L%d: usage: push integer\n", info->line_num);
 	else if (strcmp(iden, usage) == 0)
-		fprintf(stderr, "Usage: monty file\n");
+		fprintf(stderr, "USAGE: monty file\n");
 	else if (strcmp(iden, op) == 0)
 		fprintf(stderr, "Error: Can't open file %s\n", add_info);
 	else if (strcmp(iden, cmd) == 0)
