@@ -2,7 +2,6 @@
 
 /**
  * print_err - printd error messages to stderr
- * @stack: stack pointer
  * @iden: string identifier
  * @add_info: additional info to print
  */
@@ -11,7 +10,7 @@ void print_err(char *iden, char *add_info)
 	char *usage = "usage", *op = "open", *cmd = "command", *mallc = "malloc";
 	char *pnt = "pint", *ad = "add", *swp = "swap", *pp = "pop",
 	     *inv = "invalid", *unkn = "unknown";
-	
+
 	if (strcmp(iden, inv) == 0)
 		fprintf(stderr, "L%d: usage: push integer\n", info->line_num);
 	else if (strcmp(iden, usage) == 0)
@@ -38,6 +37,7 @@ void print_err(char *iden, char *add_info)
 /**
  * pall - prints elements of a stack from the top
  * @stack: stack pointer
+ * @num: unused number
  */
 void pall(stack_t **stack, unsigned int __attribute__((unused))num)
 {
@@ -53,6 +53,7 @@ void pall(stack_t **stack, unsigned int __attribute__((unused))num)
 /**
  * pint - prints the first element of the stack
  * @stack: stack pointer
+ * @num: unused number
  */
 void pint(stack_t **stack, unsigned int __attribute__((unused))num)
 {

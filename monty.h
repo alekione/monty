@@ -56,6 +56,8 @@ int process_file(stack_t **stack, instruction_t **instruct, char *file);
 ssize_t _getline(char **pline_buf, size_t *pn, FILE *fin);
 void initialize(instruction_t **instruct);
 int run_command(stack_t **stack, instruction_t **instruct);
+int run_command2(char *op, int execute, stack_t **stack,
+		instruction_t **instruct);
 bool isexecutable(char *command, stack_t *stack);
 void stripstr(char **ptr);
 void push(stack_t **stack, unsigned int num);

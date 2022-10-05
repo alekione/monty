@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
  * @stack: pointer to stack
  * @instruct: instruction pointer
  * @file: filename
- * return: 0 on success 1 on fail
+ * Return: 0 on success 1 on fail
  */
 int process_file(stack_t **stack, instruction_t **instruct, char *file)
 {
@@ -47,7 +47,10 @@ int process_file(stack_t **stack, instruction_t **instruct, char *file)
 
 	stream = fopen(file, "r");
 	if (stream == NULL)
+	{
 		print_err("open", file);
+		return (EXIT_FAILURE);
+	}
 	while ((nread = getline(&line, &len, stream)) != -1)
 	{
 		info->line_num += 1;
@@ -78,7 +81,6 @@ int process_file(stack_t **stack, instruction_t **instruct, char *file)
 
 /**
  * initialize - initializes data variables and allocates the required memory
- * @stack: stack pointer
  * @instruct: instruction pointer
  */
 void initialize(instruction_t **instruct)

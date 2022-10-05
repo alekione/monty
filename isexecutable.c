@@ -1,5 +1,11 @@
 #include "monty.h"
 
+/**
+ * isexecutable - checks whether the passed commands can be executed
+ * @command: opcode command
+ * @stack: stack pointer
+ * Return: true or false
+ */
 bool isexecutable(char *command, stack_t *stack)
 {
 	char *pnt = "pint", *pp = "pop", *swp = "swap", *ad = "add";

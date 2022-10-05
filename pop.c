@@ -3,6 +3,7 @@
 /**
  * pop - removes/deletes element at the top of the stack
  * @stack: stack of linked list
+ * @num: unused number
  */
 void pop(stack_t **stack, unsigned int __attribute__((unused))num)
 {

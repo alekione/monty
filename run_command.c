@@ -8,8 +8,7 @@
  */
 int run_command(stack_t **stack, instruction_t **instruct)
 {
-	char *op, *psh = "push", *pll = "pall", *pnt = "pint", *pp = "pop",
-	     	*swp = "swap", *ad = "add", *zero = "0", *no = "nop";
+	char *op, *psh = "push", *pll = "pall", *zero = "0", *no = "nop";
 	instruction_t *inst = *instruct;
 	unsigned int val = 0, execute = 0;
 
@@ -33,12 +32,34 @@ int run_command(stack_t **stack, instruction_t **instruct)
 		execute = 1;
 		inst->f = pall;
 	}
-	else if (strcmp(op, pnt) == 0 && isexecutable(pnt, *stack))
-	{
-		execute = 1;
-		inst->f = pint;
-	}
-	else if (strcmp(op, pp) == 0 && isexecutable(pp, *stack))
+	else if (strcmp(op, no) == 0)
+		execute = -1;
+	else
+		execute = run_command2(op, execute, stack, &inst);
+	free_str(&inst->opcode);
+	free_str(&info->val);
+	if (execute == 0)
+		return (EXIT_FAILURE);
+	if (execute == 1)
+		inst->f(stack, val);
+	return (EXIT_SUCCESS);
+}
+
+/**
+ * run_command2 - extends run_command function
+ * @op: opcode characters
+ * @execute: val to determine command execution
+ * @stack: stack pointer
+ * @instruct: instruction pointer
+ * Return: 0 or 1 for execute
+ */
+int run_command2(char *op, int execute, stack_t **stack,
+		instruction_t **instruct)
+{
+	char *pp = "pop", *swp = "swap", *ad = "add", *pnt = "pint";
+	instruction_t *inst = *instruct;
+
+	if (strcmp(op, pp) == 0 && isexecutable(pp, *stack))
 	{
 		execute = 1;
 		inst->f = pop;
@@ -53,14 +74,12 @@ int run_command(stack_t **stack, instruction_t **instruct)
 		execute = 1;
 		inst->f = add;
 	}
-	else if (strcmp(op, no) == 0)
-		return (EXIT_SUCCESS);
+	else if (strcmp(op, pnt) == 0 && isexecutable(pnt, *stack))
+	{
+		execute = 1;
+		inst->f = pint;
+	}
 	else
 		print_err("unknown", inst->opcode);
-	free_str(&inst->opcode);
-	free_str(&info->val);
-	if (execute == 0)
-		return (EXIT_FAILURE);
-	inst->f(stack, val);
-	return (EXIT_SUCCESS);
+	return (execute);
 }

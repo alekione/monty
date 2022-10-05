@@ -19,7 +19,7 @@ void free_all(stack_t **stack, instruction_t **instruct)
 void free_stack(stack_t **stack)
 {
 	stack_t *ptr;
-	
+
 	if (*stack == NULL)
 		return;
 	ptr = (*stack)->next;
