@@ -7,9 +7,10 @@
  */
 void print_err(char *iden, char *add_info)
 {
-	char *usage = "usage", *op = "open", *cmd = "command", *mallc = "malloc";
-	char *pnt = "pint", *ad = "add", *swp = "swap", *pp = "pop",
-	     *inv = "invalid", *unkn = "unknown";
+	char *usage = "usage", *op = "open", *cmd = "command", *mallc = "malloc",
+	     *mul = "mul", *md = "mod";
+	char *pnt = "pint", *ad = "add", *swp = "swap", *pp = "pop", *pchr = "pchar",
+	     *inv = "invalid", *unkn = "unknown", *sb = "sub", *dv = "div";
 
 	if (strcmp(iden, inv) == 0)
 		fprintf(stderr, "L%d: usage: push integer\n", info->line_num);
@@ -20,12 +21,12 @@ void print_err(char *iden, char *add_info)
 	else if (strcmp(iden, cmd) == 0)
 		fprintf(stderr, "L%d: unknown instruction %s\n",
 				info->line_num, add_info);
-	else if (strcmp(iden, pnt) == 0)
-		fprintf(stderr, "L%d: can't pint, stack empty\n", info->line_num);
-	else if (strcmp(iden, ad) == 0)
-		fprintf(stderr, "L%d: can't add, stack too short\n", info->line_num);
-	else if (strcmp(iden, swp) == 0)
-		fprintf(stderr, "L%d: can't swap, stack too short\n", info->line_num);
+	else if (strcmp(iden, pnt) == 0 || strcmp(iden, pchr) == 0)
+		fprintf(stderr, "L%d: can't %s, stack empty\n", info->line_num, iden);
+	else if (strcmp(iden, ad) == 0 || strcmp(iden, swp) == 0 ||
+			strcmp(iden, sb) == 0 || strcmp(iden, dv) == 0 || strcmp(iden, mul) == 0 ||
+			strcmp(iden, md) == 0)
+		fprintf(stderr, "L%d: can't %s, stack too short\n", info->line_num, iden);
 	else if (strcmp(iden, pp) == 0)
 		fprintf(stderr, "L%d: can't pop an empty stack\n", info->line_num);
 	else if (strcmp(iden, mallc) == 0)

@@ -13,7 +13,9 @@ int run_command(stack_t **stack, instruction_t **instruct)
 	unsigned int val = 0, execute = 0;
 
 	op = inst->opcode;
-	if (strcmp(op, psh) == 0)
+	if (!(isopcode(op)))
+		print_err("unknown", inst->opcode);
+	else if (strcmp(op, psh) == 0)
 	{
 		if (info->val == NULL || !(isnum(info->val)))
 			print_err("invalid", NULL);
@@ -56,7 +58,8 @@ int run_command(stack_t **stack, instruction_t **instruct)
 int run_command2(char *op, int execute, stack_t **stack,
 		instruction_t **instruct)
 {
-	char *pp = "pop", *swp = "swap", *ad = "add", *pnt = "pint";
+	char *pp = "pop", *swp = "swap", *ad = "add", *pnt = "pint", *sb = "sub",
+	     *stk = "stack", *que = "queue";
 	instruction_t *inst = *instruct;
 
 	if (strcmp(op, pp) == 0 && isexecutable(pp, *stack))
@@ -79,11 +82,69 @@ int run_command2(char *op, int execute, stack_t **stack,
 		execute = 1;
 		inst->f = pint;
 	}
-	else if (!(isopcode(op)))
-		print_err("unknown", inst->opcode);
+	else if (strcmp(op, sb) == 0 && isexecutable(sb, *stack))
+	{
+		execute = 1;
+		inst->f = sub;
+	}
+	else if (strcmp(op, stk) == 0 || strcmp(op, que) == 0)
+	{
+		execute = -1;
+		strcmp(op, stk) == 0 ? (info->format = "stack") : (info->format = "queue");
+	}
+	else
+		execute = run_command3(op, execute, stack, instruct);
 	return (execute);
 }
 
+/**
+ * run_command2 - extends run_command function
+ * @op: opcode characters
+ * @execute: val to determine command execution
+ * @stack: stack pointer
+ * @instruct: instruction pointer
+ * Return: 0 or 1 for execute
+ */
+int run_command3(char *op, int execute, stack_t **stack,
+		instruction_t **instruct)
+{
+	char *dv = "div", *ml = "mul", *md = "mod", *pchr = "pchar", *psr = "pstr",
+	     *rtl = "rotl", *rt = "rotr";
+
+	if ((strcmp(op, dv) == 0 && isexecutable(dv, *stack)) ||
+		(strcmp(op, md) == 0 && isexecutable(md, *stack)))
+	{
+		if ((*stack)->n == 0)
+			fprintf(stderr, "L%d: division by zero\n", info->line_num);
+		else
+			execute = 1;
+		strcmp(op, dv) == 0 ? ((*instruct)->f = divide) : ((*instruct)->f = mod);
+	}
+	else if (strcmp(op, ml) == 0 && isexecutable(ml, *stack))
+	{
+		execute = 1;
+		(*instruct)->f = mul;
+	}
+	else if (strcmp(op, pchr) == 0 && isexecutable(pchr, *stack))
+	{
+		if ((*stack)->n < 0 || (*stack)->n > 127)
+			fprintf(stderr, "L%d: can't pchar, value out of range\n", info->line_num);
+		else
+			execute = 1;
+		(*instruct)->f = pchar;
+	}
+	else if (strcmp(op, psr) == 0 || strcmp(op, rtl) == 0)
+	{
+		execute = 1;
+		strcmp(op, psr) == 0 ? ((*instruct)->f = pstr) : ((*instruct)->f = rotl);
+	}
+	else if (strcmp(op, rt) == 0)
+	{
+		execute = 1;
+		(*instruct)->f = rotr;
+	}
+	return (execute);
+}
 /**
  * isopcode - checks whether a given string is an opcode
  * @opcode: char opcode
@@ -91,7 +152,9 @@ int run_command2(char *op, int execute, stack_t **stack,
  */
 bool isopcode(char *opcode)
 {
-	char *cmd[] = {"push", "pall", "pint", "pop", "swap", "add", "nop", NULL};
+	char *cmd[] = {"push", "pall", "pint", "pop", "swap", "add", "nop",
+		"sub", "div", "mul", "mod", "pchar", "pstr", "rotl", "rotr",
+		"queue", "stack", NULL};
 	int i;
 
 	for (i = 0; cmd[i] != NULL; i++)

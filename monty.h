@@ -41,33 +41,46 @@ typedef struct instruction_s
  * struct stack_info - contains important details about stack
  * @line_num: file line number counter
  * @val: holds int value required by stack
- * @ptr: holds address to instruction_t pointer
+ * @format: holds the program format - stack/queue
  */
 typedef struct stack_info
 {
 	int line_num;
 	char *val;
-	instruction_t **ptr;
+	char *format;
 } stack_info;
 
 extern stack_info *info;
 
 int process_file(stack_t **stack, instruction_t **instruct, char *file);
+void process_file2(char *str, instruction_t **instruct);
 ssize_t _getline(char **pline_buf, size_t *pn, FILE *fin);
 void initialize(instruction_t **instruct);
 int run_command(stack_t **stack, instruction_t **instruct);
 int run_command2(char *op, int execute, stack_t **stack,
+		instruction_t **instruct);
+int run_command3(char *op, int execute, stack_t **stack,
 		instruction_t **instruct);
 bool isopcode(char *opcode);
 bool isexecutable(char *command, stack_t *stack);
 bool isnum(char *str);
 void stripstr(char **ptr);
 void push(stack_t **stack, unsigned int num);
+void push_s(stack_t **stack, unsigned int num);
+void push_q(stack_t **stack, unsigned int num);
 void pop(stack_t **stack, unsigned int num);
 void swap(stack_t **stack, unsigned int num);
 void add(stack_t **stack, unsigned int num);
 void pall(stack_t **stack, unsigned int num);
 void pint(stack_t **stack, unsigned int num);
+void sub(stack_t **stack, unsigned int num);
+void divide(stack_t **stack, unsigned int num);
+void mul(stack_t **stack, unsigned int num);
+void mod(stack_t **stack, unsigned int num);
+void pchar(stack_t **stack, unsigned int num);
+void pstr(stack_t **stack, unsigned int num);
+void rotl(stack_t **stack, unsigned int num);
+void rotr(stack_t **stack, unsigned int num);
 void print_err(char *iden, char *add_info);
 void free_all(stack_t **stack, instruction_t **instruct);
 void free_stack(stack_t **stack);

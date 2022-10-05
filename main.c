@@ -40,8 +40,8 @@ int main(int argc, char *argv[])
 int process_file(stack_t **stack, instruction_t **instruct, char *file)
 {
 	FILE *stream;
-	char *line = NULL, *token, *str;
-	size_t len = 0, count = 0;
+	char *line = NULL, *str;
+	size_t len = 0;
 	ssize_t nread;
 	int ret = EXIT_SUCCESS;
 
@@ -56,17 +56,12 @@ int process_file(stack_t **stack, instruction_t **instruct, char *file)
 		info->line_num += 1;
 		str = line;
 		stripstr(&str);
-		token = strtok(str, " ");
-		count = 0;
-		while (count < 2)
+		if (str[0] == '#')
 		{
-			if (count == 0 && token != NULL)
-				(*instruct)->opcode = strdup(token);
-			if (count != 0 && token != NULL)
-				info->val = strdup(token);
-			token = strtok(NULL, " ");
-			count++;
+			free_str(&line);
+			continue;
 		}
+		process_file2(str, instruct);
 		free_str(&line);
 		if ((*instruct)->opcode == NULL)
 			continue;
@@ -80,6 +75,28 @@ int process_file(stack_t **stack, instruction_t **instruct, char *file)
 }
 
 /**
+ * process_file2 - continues process_file function
+ * @str: string commands
+ * @instruct: instruction pointer
+ */
+void process_file2(char *str, instruction_t **instruct)
+{
+	char *token;
+	int count;
+
+	token = strtok(str, " ");
+	count = 0;
+	while (count < 2)
+	{
+		if (count == 0 && token != NULL)
+			(*instruct)->opcode = strdup(token);
+		if (count != 0 && token != NULL)
+			info->val = strdup(token);
+		token = strtok(NULL, " ");
+		count++;
+	}
+}
+/**
  * initialize - initializes data variables and allocates the required memory
  * @instruct: instruction pointer
  */
@@ -87,7 +104,7 @@ void initialize(instruction_t **instruct)
 {
 	(*instruct)->opcode = NULL;
 	info->val = NULL;
-	info->ptr = instruct;
+	info->format = "stack";
 }
 
 /**
