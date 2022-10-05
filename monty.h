@@ -59,6 +59,7 @@ int run_command(stack_t **stack, instruction_t **instruct);
 int run_command2(char *op, int execute, stack_t **stack,
 		instruction_t **instruct);
 bool isexecutable(char *command, stack_t *stack);
+bool isnum(char *str);
 void stripstr(char **ptr);
 void push(stack_t **stack, unsigned int num);
 void pop(stack_t **stack, unsigned int num);

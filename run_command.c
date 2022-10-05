@@ -15,7 +15,7 @@ int run_command(stack_t **stack, instruction_t **instruct)
 	op = inst->opcode;
 	if (strcmp(op, psh) == 0)
 	{
-		if (info->val == NULL)
+		if (info->val == NULL || !(isnum(info->val)))
 			print_err("invalid", NULL);
 		else
 		{
