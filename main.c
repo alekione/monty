@@ -56,7 +56,7 @@ int process_file(stack_t **stack, instruction_t **instruct, char *file)
 		info->line_num += 1;
 		str = line;
 		stripstr(&str);
-		if (str[0] == '#')
+		if (str == NULL || str[0] == '#')
 		{
 			free_str(&line);
 			continue;
