@@ -5,7 +5,7 @@
  * @stack: stack pointer
  * @n: int value to add to the stack
  */
-void push(stack_t **stack, unsigned int n)
+void push(stack_t **stack, int n)
 {
 	char *stk = "stack";
 
@@ -20,7 +20,7 @@ void push(stack_t **stack, unsigned int n)
  * @stack: pointer to the head of the list
  * @n: int data to add to the node
  */
-void push_s(stack_t **stack, unsigned int n)
+void push_s(stack_t **stack, int n)
 {
 	stack_t *ptr, *start;
 
@@ -49,7 +49,7 @@ void push_s(stack_t **stack, unsigned int n)
  * @stack: stack pointer
  * @n: element to use on the stack
  */
-void push_q(stack_t **stack, unsigned int n)
+void push_q(stack_t **stack, int n)
 {
 	stack_t *ptr, *start = *stack;
 

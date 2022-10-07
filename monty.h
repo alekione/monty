@@ -82,11 +82,11 @@ bool isexecutable(char *command, stack_t *stack);
 
 /* ====== push.c ============= */
 /* adds elements on a stack */
-void push(stack_t **stack, unsigned int num);
+void push(stack_t **stack, int num);
 /* adds at the head/front of a stack */
-void push_s(stack_t **stack, unsigned int num);
+void push_s(stack_t **stack, int num);
 /* adds at the end/bottom of the stack */
-void push_q(stack_t **stack, unsigned int num);
+void push_q(stack_t **stack, int num);
 
 /* ====== other single *.c files ========= */
 

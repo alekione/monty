@@ -8,9 +8,9 @@
  */
 int run_command(stack_t **stack, instruction_t **instruct)
 {
-	char *op, *psh = "push", *pll = "pall", *zero = "0", *no = "nop";
+	char *op, *psh = "push", *pll = "pall", *no = "nop";
 	instruction_t *inst = *instruct;
-	unsigned int val = 0, execute = 0;
+	int val = 0, execute = 0;
 
 	op = inst->opcode;
 	if (!(isopcode(op)))
@@ -22,11 +22,8 @@ int run_command(stack_t **stack, instruction_t **instruct)
 		else
 		{
 			val = atoi(info->val);
-			if (val == 0 && strcmp(info->val, zero) != 0)
-				print_err("invalid", NULL);
-			else
-				execute = 1;
-			inst->f = push;
+			execute = -1;
+			push(stack, val);
 		}
 	}
 	else if (strcmp(op, pll) == 0)
