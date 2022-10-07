@@ -13,7 +13,9 @@ int run_command(stack_t **stack, instruction_t **instruct)
 	int val = 0, execute = 0;
 
 	op = inst->opcode;
-	if (!(isopcode(op)))
+	if (op[0] == '#')
+		execute = -1;
+	else if (!(isopcode(op)))
 		print_err("unknown", inst->opcode);
 	else if (strcmp(op, psh) == 0)
 	{
